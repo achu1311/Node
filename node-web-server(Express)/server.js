@@ -35,7 +35,7 @@ hbs.registerHelper('Year',()=>{
 //
 
   // or i can use res.render(hbs html filename)
-})
+//})
 app.get('/',(req,res)=>{      // / used for mentioning home directory in project
   res.render('home.hbs',{
     pageTitle:'Welcome'         //argument
