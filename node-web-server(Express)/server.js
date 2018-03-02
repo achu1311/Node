@@ -19,12 +19,21 @@ hbs.registerHelper('Year',()=>{
   return text.toUpperCase()
 })
 
-app.use((req,res,next)=>{
-  var now=new Date().toString();
-  var log1=`${now}:${req.method} ${req.url}`;
-  console.log(log1);
-  fs.appendFile('server.log',log1+'\n');
-res.send("Maintanenr")
+//for giving only maintanence page
+
+// app.use((req,res,next)=>{
+//   var now=new Date().toString();
+//   var log1=`${now}:${req.method} ${req.url}`;
+//   console.log(log1);
+//   fs.appendFile('server.log',log1+'\n');
+// res.send("Maintanenr")
+//   // or i can use res.render(hbs html filename)
+    //if we use next(); fn here it will proceed otherwise it wont
+//
+//})
+
+//
+
   // or i can use res.render(hbs html filename)
 })
 app.get('/',(req,res)=>{      // / used for mentioning home directory in project
