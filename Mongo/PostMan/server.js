@@ -10,20 +10,21 @@ var app=express();
 app.use(bodyparser.json());
 
 
- app.get('/todos',(req,res)=>{
+ app.patch('/todos',(req,res)=>{
  var id=req.query.id;
  var body=_.pick(req.body,['text','completed']);
-
+body.completed=true;
+body.completedAt=12121;
  console.log(id);
  if(!ObjectID.isValid(id))
  console.log("Not valid");
-    todo.findById(id).then((todo)=>{
-         if(!todo)
-         return console.log("Not Found");
-        res.send({todo});
+    todo.findByIdAndUpdate(id,{$set:body},{new:true}).then((todo)=>{
+        res.send(todo);
     },(err)=>{
  console.log("Error Value");
 
+    });
+ });
 
 
 
