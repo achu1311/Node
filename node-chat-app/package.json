@@ -5,14 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scripts":{"start":"node server server.js"}
+    "scripts": {
+      "start": "node server server.js"
+    }
   },
-  "engines":{
-"node":"8.9.4"
+  "engines": {
+    "node": "8.9.4"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4",
+    "socketio": "^1.0.0"
   }
 }
