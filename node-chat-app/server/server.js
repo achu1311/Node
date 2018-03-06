@@ -1,5 +1,6 @@
 const path=require('path');
 const express=require('express');
+const mes=require('./utils/message.js').generateValues;
 var http=require('http');
 const socketIO=require('socket.io'); 
 var add=path.join(__dirname,"../public")
@@ -11,22 +12,20 @@ app.use(express.static(add));
 var io=socketIO(server);        //server relates to 9th line
 io.on('connection',(socket)=>{
     console.log('New user connected');
-    socket.on('createMessage',(val)=>{
-console.log(val);
+    socket.on('createMessage',(val,callback)=>{
+console.log(val);callback();
+ socket.broadcast.emit('newMessage',mes(val.from,val.text));
+
 });
-socket.broadcast.emit('newMessage',{
-    from:'admin',
-    text:'I am back'
-})
-socket.emit('newMessage',{
-    from:'admin',
-    text:'Welcome'
-});
+//  socket.broadcast.emit('newMessage',mes('admin','I am Back'))
+
+socket.emit('newMessage',mes('admin','welcome'));
+
  
 // socket.emit('welcome',('Welcome ashwin'));
-//     socket.on('disconnect',()=>{                //dissconnect dont change the name
-//     console.log("client disconnected ");
-// });
+    socket.on('disconnect',()=>{                //dissconnect dont change the name
+    console.log("client disconnected ");
+});
 
 });
 

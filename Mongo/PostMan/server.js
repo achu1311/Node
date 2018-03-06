@@ -84,27 +84,25 @@ app.use(bodyparser.json());
 
 //updating values to mongo
 
-// app.post('/todos',(req,res)=>{
+app.post('/todos',(req,res)=>{
 
-// var toDo=new todo({  
-//     text:req.body.text
-// });
+var toDo=new todo({  
+    text:req.body.text
+});
 
-// toDo.save().then((doc)=>{
-//     res.send(doc);
+toDo.save().then((doc)=>{
+    res.send(doc);
+//console.log(doc);
+}
+,(err)=>{
 
+res.status(400).send();
+});
 
-// console.log(doc);
-// }
-// ,(err)=>{
-
-// res.status(400).send();
-// });
-
-// console.log(JSON.stringify(req.body));
+console.log(JSON.stringify(req.body));
 
 // res.send(req.body);
-//})
+})
 
 //
 
