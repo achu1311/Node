@@ -17,7 +17,13 @@ io.on('connection',(socket)=>{
     
     socket.on('createMessage',(message)=>{
         console.log(message);
+        //sends message to everyone including himself
+        io.emit('newMessage',{from:message.from,message:message.message,createdAt:new Date().getTime()})
     })
+    //only to the connected specific socket 
+    socket.emit('newMessage',{from:'admin',message:'Welcome to the chat',createdAt:new Date().getTime()})
+    //sends message to everyone excluding himself
+    socket.broadcast.emit('newMessage',{from:'admin',message:'New User joined',createdAt:new Date().getTime()})
     socket.on('disconnect',()=>{
         console.log('disconnected');
     })
