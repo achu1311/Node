@@ -2,7 +2,7 @@ const express=require('express');
 const path=require('path');
 const SocketIO=require('socket.io');
 const http=require('http');
-
+const generateMessage=require('../public/utils/message.js')
 
 const publicPath=path.join(__dirname,'../public')
 let app=express();
@@ -13,17 +13,17 @@ var io=SocketIO(server)
 
 io.on('connection',(socket)=>{
     console.log('New user connected');
-    socket.emit('newMessage',{from:'Ashwin',message:'Hello from me server'})
+    socket.emit('newMessage',generateMessage.generateMessage('Ashwin','Hello from me server'));
     
     socket.on('createMessage',(message)=>{
         console.log(message);
         //sends message to everyone including himself
-        io.emit('newMessage',{from:message.from,message:message.message,createdAt:new Date().getTime()})
+        io.emit('newMessage',generateMessage.generateMessage(message.from,message.message));
     })
     //only to the connected specific socket 
-    socket.emit('newMessage',{from:'admin',message:'Welcome to the chat',createdAt:new Date().getTime()})
+    socket.emit('newMessage',generateMessage.generateMessage('admin','Welcome to the chat'))
     //sends message to everyone excluding himself
-    socket.broadcast.emit('newMessage',{from:'admin',message:'New User joined',createdAt:new Date().getTime()})
+    socket.broadcast.emit('newMessage',generateMessage.generateMessage('admin','New User joined'))
     socket.on('disconnect',()=>{
         console.log('disconnected');
     })
