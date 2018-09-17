@@ -4,3 +4,5 @@ node-chat-app/node_modules
 node-web-server(Express)/node_modules
 Testing/node_modules
 /node_modules
+Chat-Trial/node_modules
+Chat-Trial/package-lock.json
