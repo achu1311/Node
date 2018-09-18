@@ -11,20 +11,21 @@ let server=http.createServer(app);
 var io=SocketIO(server)
 
 
-io.on('connection',(socket)=>{
+io.on('connection',function(socket){
     console.log('New user connected');
     socket.emit('newMessage',generateMessage.generateMessage('Ashwin','Hello from me server'));
     
-    socket.on('createMessage',(message)=>{
+    socket.on('createMessage',function(message,callback){
         console.log(message);
         //sends message to everyone including himself
         io.emit('newMessage',generateMessage.generateMessage(message.from,message.message));
+        callback('Succesfully sent');
     })
     //only to the connected specific socket 
     socket.emit('newMessage',generateMessage.generateMessage('admin','Welcome to the chat'))
     //sends message to everyone excluding himself
     socket.broadcast.emit('newMessage',generateMessage.generateMessage('admin','New User joined'))
-    socket.on('disconnect',()=>{
+    socket.on('disconnect',function(){
         console.log('disconnected');
     })
 })

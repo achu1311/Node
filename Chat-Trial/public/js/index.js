@@ -1,15 +1,15 @@
 let socket=io();
-socket.on('connect',()=>{
+socket.on('connect',function(){
     console.log('Connected to server');
-
-    socket.emit('createMessage',{from:'Ashwin ',message:'Message from client',createdAt:new Date().getTime()})
 })
-    socket.on('newMessage',(message)=>{
+    socket.on('newMessage',function(message){
         console.log(message);
+    })
+    socket.emit('createMessage',{from:'Ashwin ',message:'Message from client2',createdAt:new Date().getTime()},function(data){
+        console.log(data);
     })
 
 
-
- socket.on('disconnect',()=>{
+ socket.on('disconnect',function(){
     console.log('Disconnected');
 })
