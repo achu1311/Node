@@ -27,7 +27,7 @@ io.on('connection',function(socket){
 
     socket.on('createLocationMessage',function(coords){
         // io.emit()
-        io.emit('newMessage', generateMessage.generateMessage('User Location', `${coords.latitude}, ${coords.longitude}`));
+        io.emit('newLocationMessage', generateMessage.generateLocationMessage('Ashwin', coords.latitude, coords.longitude));
     })
     socket.on('disconnect',function(){
         console.log('disconnected');
