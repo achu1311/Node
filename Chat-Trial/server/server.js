@@ -18,7 +18,7 @@ io.on('connection',function(socket){
     socket.on('createMessage',function(message,callback){
         console.log(message);
         //sends message to everyone including himself
-        io.emit('newMessage',generateMessage.generateMessage(message.from,message.message));
+        io.emit('newMessage',generateMessage.generateMessage(message.from,message.text));
         callback('Succesfully sent');
     })
     //only to the connected specific socket 
