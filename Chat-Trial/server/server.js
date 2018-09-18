@@ -13,7 +13,10 @@ var io=SocketIO(server)
 
 io.on('connection',function(socket){
     console.log('New user connected');
-    socket.emit('newMessage',generateMessage.generateMessage('Ashwin','Hello from me server'));
+    //only to the connected specific socket 
+    socket.emit('newMessage',generateMessage.generateMessage('Ashwin','Welcome to chat app'));
+    //sends message to everyone excluding himself
+    socket.broadcast.emit('newMessage',generateMessage.generateMessage('admin','New User joined'));    
     
     socket.on('createMessage',function(message,callback){
         console.log(message);
@@ -21,10 +24,7 @@ io.on('connection',function(socket){
         io.emit('newMessage',generateMessage.generateMessage(message.from,message.text));
         callback('Succesfully sent');
     })
-    //only to the connected specific socket 
-    socket.emit('newMessage',generateMessage.generateMessage('admin','Welcome to the chat'))
-    //sends message to everyone excluding himself
-    socket.broadcast.emit('newMessage',generateMessage.generateMessage('admin','New User joined'))
+
     socket.on('disconnect',function(){
         console.log('disconnected');
     })
