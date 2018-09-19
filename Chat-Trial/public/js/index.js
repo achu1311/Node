@@ -4,8 +4,9 @@ socket.on('connect',function(){
 })
     socket.on('newMessage',function(message){
         console.log(message);
+        var formattedTime = moment(message.createdAt).format('h:mm a');
         var li=jQuery('<li></li>');
-        li.text(`${message.from}:${message.text}`)
+        li.text(`${message.from} ${formattedTime} :${message.text}`)
         jQuery('#messages').append(li)
 
     })
@@ -48,7 +49,8 @@ socket.on('connect',function(){
     socket.on('newLocationMessage',function(data){
         let a=jQuery('<a target="_blank">My current location</a>');
         let li=jQuery('<li></li>');
-        li.text(`${data.from}: `);
+        var formattedTime = moment(data.createdAt).format('h:mm a');
+        li.text(`${data.from} ${formattedTime}: `);
         a.attr('href',data.url);
         li.append(a);
         jQuery('#messages').append(li); 
