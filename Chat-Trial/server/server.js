@@ -2,8 +2,8 @@ const express=require('express');
 const path=require('path');
 const SocketIO=require('socket.io');
 const http=require('http');
-const generateMessage=require('../public/utils/message.js')
-const moment=require('moment');
+const generateMessage=require('../public/utils/message.js');
+const {isRealString} = require('./utils/validation');
 const publicPath=path.join(__dirname,'../public')
 let app=express();
 app.use(express.static(publicPath));
@@ -14,6 +14,14 @@ var io=SocketIO(server)
 io.on('connection',function(socket){
     console.log('New user connected');
     //only to the connected specific socket 
+    socket.on('join',function(params,callback){
+        if (!isRealString(params.name) || !isRealString(params.room)) {
+            callback('Name and room name are required.');
+          }
+      
+          callback();
+    })
+    
     socket.emit('newMessage',generateMessage.generateMessage('Ashwin','Welcome to chat app'));
     //sends message to everyone excluding himself
     socket.broadcast.emit('newMessage',generateMessage.generateMessage('admin','New User joined'));    
@@ -24,6 +32,7 @@ io.on('connection',function(socket){
         io.emit('newMessage',generateMessage.generateMessage(message.from,message.text));
         callback('Succesfully sent');
     })
+
 
     socket.on('createLocationMessage',function(coords){
         // io.emit()
