@@ -18,13 +18,21 @@ io.on('connection',function(socket){
         if (!isRealString(params.name) || !isRealString(params.room)) {
             callback('Name and room name are required.');
           }
+          socket.join(params.room);
+          // socket.leave('The Office Fans');
       
+          // io.emit -> io.to('The Office Fans').emit
+          // socket.broadcast.emit -> socket.broadcast.to('The Office Fans').emit
+          // socket.emit
+          socket.emit('newMessage',generateMessage.generateMessage('Ashwin','Welcome to chat app'));
+          //sends message to everyone excluding himself
+          socket.to(params.room).broadcast.emit('newMessage',generateMessage.generateMessage('admin',`${params.name} has joined`));    
           callback();
     })
     
-    socket.emit('newMessage',generateMessage.generateMessage('Ashwin','Welcome to chat app'));
-    //sends message to everyone excluding himself
-    socket.broadcast.emit('newMessage',generateMessage.generateMessage('admin','New User joined'));    
+    // socket.emit('newMessage',generateMessage.generateMessage('Ashwin','Welcome to chat app'));
+    // //sends message to everyone excluding himself
+    // socket.broadcast.emit('newMessage',generateMessage.generateMessage('admin','New User joined'));    
     
     socket.on('createMessage',function(message,callback){
         console.log(message);
